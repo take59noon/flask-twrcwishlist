@@ -1,0 +1,68 @@
+{% extends "layout_with_sidebar.html" %}
+
+{% block title %}
+  Index
+{% endblock %}
+
+{% block main %}
+  {% if products %}
+    <div class="table-responsive">
+      <table id="index-table" class="table table-sm table-bordered tablesorter mb-0">
+        <caption class="text-right">{{ products | count }}件表示</caption>
+        <thead class="thead-light">
+          <tr>
+            <th class="align-middle" data-placeholder="Enter search word">Title</th>
+            <th class="align-middle" data-placeholder="Enter search word">Name</th>
+            <th class="align-middle" data-placeholder="Try >=2021">Release Date</th> 
+            <th class="align-middle" data-placeholder="">Price</th>
+            <th class="align-middle" style="width:20%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+            <tr>
+              <td class="align-middle text-left"><a href="{{ p.url }}" target="_blank" rel="noopener noreferrer">{{ p.title }}</a></td>
+              <td class="align-middle text-left">{{ p.name }}</td>
+              <td class="align-middle text-left">{{ p.release_date }}</td>
+              <td class="align-middle text-right">{{ "￥{0:,}".format(p.price) }}</td>
+              <td class="align-middle">
+                {% if not p.product_not_purchased %}
+                  <form action="/purchased" method="post" class="d-inline">
+                    <input type="hidden" name="productid" value="{{ p.id }}">
+                    <button class="btn btn-secondary py-0 px-2" type="submit">購入済</button> 
+                  </form>
+                {% else %}
+                  <form action="/unpurchased" method="post" class="d-inline">
+                    <input type="hidden" name="productid" value="{{ p.id }}">
+                    <button class="btn btn-primary py-0 px-2" type="submit">未購入</button> 
+                  </form>
+                {% endif %}
+                {% if not p.product_not_displayed %}
+                  <form action="/product-hidden" method="post" class="d-inline">
+                    <input type="hidden" name="productid" value="{{ p.id }}">
+                    <button class="btn btn-secondary py-0 px-2" type="submit">見送り</button> 
+                  </form>
+                {% else %}
+                  <form action="/product-unhidden" method="post" class="d-inline">
+                    <input type="hidden" name="productid" value="{{ p.id }}">
+                    <button class="btn btn-primary py-0 px-2" type="submit">検討中</button> 
+                  </form>
+              {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% elif message %}
+    <p class="h5">{{ message }}</p>
+  {% else %}
+    <p class="h5">データがありません。</p>
+  {% endif %}
+
+  {% block search %}{% endblock %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" integrity="sha512-dj/9K5GRIEZu+Igm9tC16XPOTz0RdPk9FGxfZxShWf65JJNU2TjbElGjuOo3EhwAJRPhJxwEJ5b+/Ouo+VqZdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/static/js/tablesorter.js"></script>
+{% endblock %}

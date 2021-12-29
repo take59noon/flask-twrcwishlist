@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block sidebar %}
+  {% if artists %}
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar py-3 border-right">
+      <div class="sidebar-sticky">
+        <!-- <div class="h3">Artists</div> -->
+        <ul class="nav flex-column">
+          {% for artist in artists %}
+            <li class="nav-item">
+              <a class="nav-link py-1" href="/artists/{{ artist.id }}"><span data-feather="list"></span>{{ artist.name }}</a>
+              <!-- <a class="text-dark p-0" href="/artists/{{ artist.id }}"><span data-feather="list"></span>{{ artist.name }}</a> -->
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+    <!-- Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  {% endif %}
+{% endblock %}

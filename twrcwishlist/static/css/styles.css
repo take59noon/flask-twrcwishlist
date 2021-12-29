@@ -1,0 +1,25 @@
+body {
+    background-color: #f5f5f5;
+    padding-top: 4.5rem;
+}
+
+nav .navbar-brand {
+  /* size for brand */
+  font-size: xx-large;
+}
+
+nav .form-control {
+  /* Center form controls */
+  display: inline-block;
+
+  /* Override Bootstrap's 100% width for form controls */
+  width: auto;
+}
+
+main {
+  /* Scroll horizontally as needed */
+  overflow-x: auto;
+
+  /* Center contents */
+  text-align: center;
+}

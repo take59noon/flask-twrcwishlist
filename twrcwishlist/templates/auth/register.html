@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block main %}
+  <form class="form-signin" action="/register" method="post">
+    <!-- <h3 class="mb-4">New User Registration</h3> -->
+    <h3 class="mb-4">ユーザー登録</h3>
+    <div class="form-group">
+      <label for="input-username" class="sr-only">Username</label>
+      <!-- <input class="form-control" id="input-username" name="username" placeholder="Username" type="text" autocomplete="off" autofocus> -->
+      <input class="form-control" id="input-username" name="username" placeholder="ユーザー名" type="text" autocomplete="off" autofocus>
+    </div>
+    <div class="form-group">
+      <label for="input-password" class="sr-only">Password</label>
+      <!-- <input class="form-control" id="input-password" name="password" placeholder="Password" type="password"> -->
+      <input class="form-control" id="input-password" name="password" placeholder="パスワード" type="password">
+    </div>
+    <div class="form-group">
+      <label for="input-confirmation" class="sr-only">Password</label>
+      <!-- <input class="form-control" id="input-confirmation" name="confirmation" placeholder="Re-enter password" type="password"> -->
+      <input class="form-control" id="input-confirmation" name="confirmation" placeholder="パスワードの再入力" type="password">
+    </div>
+    <!-- <button class="btn btn-secondary btn-lg btn-block mt-3" type="submit">Register</button> -->
+    <button class="btn btn-secondary btn-lg btn-block mt-3" type="submit">登録</button>
+  </form>
+{% endblock %}

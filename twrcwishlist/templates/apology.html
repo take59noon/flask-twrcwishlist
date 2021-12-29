@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Apology
+{% endblock %}
+
+{% block main %}
+  {% if message %}
+    <div class="h3 mb-4">{{ message }}</div>
+  {% endif %}
+  {% if code %}
+    <div>error code: {{ code }}</div>
+  {% endif %}
+{% endblock %}
