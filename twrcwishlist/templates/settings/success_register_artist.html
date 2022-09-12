@@ -1,0 +1,17 @@
+{% extends "layout_settings.html" %}
+
+{% block title %}
+    Artist Registration - success
+{% endblock %}
+
+{% block main %}
+    <h3>
+        <!-- New artist registered successfully -->
+        アーティスト登録完了
+    </h3>
+    <div>
+        <a href="/settings">Return Settings</a>
+        <span> / </span>
+        <a href="{{ url_for('settings.register_artist') }}">Set another</a>
+    </div>
+{% endblock %}

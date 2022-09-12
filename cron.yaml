@@ -1,0 +1,5 @@
+cron: 
+- description: "update products table on database and announce the result by linebot if new data found." 
+  url: /tasks/update-products
+  schedule: 14,28 of month 12:00
+  timezone: Asia/Tokyo

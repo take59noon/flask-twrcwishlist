@@ -80,7 +80,10 @@ def login():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("auth/login.html")
+        return render_template(
+            "auth/login.html",
+            is_displayed_copyright = True,
+            )
 
 
 @bp.route("/logout")
@@ -94,63 +97,70 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@bp.route('/register', methods=('GET','POST'))
-def register():
-    """Register user"""
+# # GCPへの設置にあたり、登録機能を無効化する。
+# @bp.route('/register', methods=('GET','POST'))
+# def register():
+#     """Register user"""
 
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        name = request.form.get("username", "").strip()
-        pw = request.form.get("password", "").strip()
-        pw_2 = request.form.get("confirmation", "").strip()
+#     # User reached route via POST (as by submitting a form via POST)
+#     if request.method == "POST":
+#         name = request.form.get("username", "").strip()
+#         pw = request.form.get("password", "").strip()
+#         pw_2 = request.form.get("confirmation", "").strip()
 
-        # check if valid values
-        if len(name) == 0:
-            # return apology("must provide username")
-            return apology("ユーザー名の入力が必要です。")
-        if len(pw) == 0:
-            # return apology("must provide password")
-            return apology("パスワードの入力が必要です。")
-        if len(pw_2) == 0:
-            # return apology("Please re-enter password")
-            return apology("パスワードの再入力が必定です。")
+#         # check if valid values
+#         if len(name) == 0:
+#             # return apology("must provide username")
+#             return apology("ユーザー名の入力が必要です。")
+#         if len(pw) == 0:
+#             # return apology("must provide password")
+#             return apology("パスワードの入力が必要です。")
+#         if len(pw_2) == 0:
+#             # return apology("Please re-enter password")
+#             return apology("パスワードの再入力が必定です。")
 
-        if pw != pw_2:
-            # return apology("not match the passwords")
-            return apology("入力したパスワードが一致しません。")
+#         if pw != pw_2:
+#             # return apology("not match the passwords")
+#             return apology("入力したパスワードが一致しません。")
 
-        # Connect database 
-        db = get_db()
+#         # Connect database 
+#         db = get_db()
 
-        # Check if username is already registered
-        if name:
-            # Query username (nocase)
-            users = db.execute(
-                "select username from users where username like ?", 
-                (name,)
-            ).fetchone()
-            if users:
-                # return apology(f'Sorry, "{name}" has been already registered.', 409)
-                return apology(f'あいにくですが、"{name}" はすでに登録されています。', 409)
+#         # Check if username is already registered
+#         if name:
+#             # Query username (nocase)
+#             users = db.execute(
+#                 "select username from users where username like ?", 
+#                 (name,)
+#             ).fetchone()
+#             if users:
+#                 # return apology(f'Sorry, "{name}" has been already registered.', 409)
+#                 return apology(f'あいにくですが、"{name}" はすでに登録されています。', 409)
 
-            # Register
-            try:
-                db.execute(
-                    "insert into users (username, hash) values (?, ?)",
-                    (name, generate_password_hash(pw),)
-                )
-                db.commit()
+#             # Register
+#             try:
+#                 db.execute(
+#                     "insert into users (username, hash) values (?, ?)",
+#                     (name, generate_password_hash(pw),)
+#                 )
+#                 db.commit()
 
-            except Exception as e:
-                # return apology(f'Failed to register. Please contact the administrator.', 500)
-                return apology(f'登録に失敗しました。この問題が解決しない場合は、サーバー管理者に連絡願います。', 500)
+#             except Exception as e:
+#                 # return apology(f'Failed to register. Please contact the administrator.', 500)
+#                 return apology(f'登録に失敗しました。この問題が解決しない場合は、サーバー管理者に連絡願います。', 500)
 
-            return render_template("auth/success_register.html")
+#             return render_template(
+#                 "auth/success_register.html",
+#                 is_hidden_signature=True,
+#                 )
         
-        else:
-            # return apology("must provide username to register")
-            return apology("ユーザー名がないため、データ登録できません。", 409)
+#         else:
+#             # return apology("must provide username to register")
+#             return apology("ユーザー名がないため、データ登録できません。", 409)
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("auth/register.html")
+#     # User reached route via GET (as by clicking a link or via redirect)
+#     else:
+#         return render_template(
+#             "auth/register.html",
+#             is_hidden_signature=True,
+#             )

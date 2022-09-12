@@ -1,0 +1,24 @@
+{% extends "layout_settings.html" %}
+
+{% block title %}
+  Settings - Artist Registration
+{% endblock %}
+
+{% block main %}
+  <form class="form-signin" action="{{ url_for('settings.register_artist') }}" method="post">
+    <!-- <h3 class="mb-4">New Artist Registration</h3> -->
+    <h3 class="mb-4">アーティスト登録</h3>
+    <div class="form-group">
+      <label for="input-artistid" class="sr-only">Artist ID</label>
+      <!-- <input class="form-control" id="input-artistid" name="artistid" placeholder="Artist ID" type="text" autocomplete="off" autofocus> -->
+      <input class="form-control" id="input-artistid" name="artistid" placeholder="アーティストID" type="text" autocomplete="off" autofocus>
+    </div>
+    <div class="form-group">
+      <label for="input-artistname" class="sr-only">Artistname</label>
+      <!-- <input class="form-control" id="input-artistname" name="artistname" placeholder="Artistname" type="text" autocomplete="off" autofocus> -->
+      <input class="form-control" id="input-artistname" name="artistname" placeholder="アーティスト名" type="text" autocomplete="off" autofocus>
+    </div>
+    <!-- <button class="btn btn-secondary btn-lg btn-block mt-3" type="submit">Register</button> -->
+    <button class="btn btn-secondary btn-lg btn-block mt-3" type="submit">登録</button>
+  </form>
+{% endblock %}

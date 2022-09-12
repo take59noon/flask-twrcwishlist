@@ -5,7 +5,10 @@ from markupsafe import escape
 
 def apology(message, code=400):
     """Render message as an apology to user."""
-    return render_template("apology.html", message=escape(message), code=code), code
+    return render_template(
+        "apology.html", 
+        is_hidden_signature=True,
+        message=escape(message), code=code), code
 
 
 def login_required(view):

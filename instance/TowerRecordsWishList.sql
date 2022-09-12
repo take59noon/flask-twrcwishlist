@@ -87,7 +87,8 @@ insert into artists (id,name) values ('2587328','ヨルシカ');
 insert into artists (id,name) values ('2693192','リツカ');
 insert into artists (id,name) values ('2689676','レベル27');
 insert into artists (id,name) values ('282110','宇多田ヒカル');
-insert into artists (id,name) values ('2570918','花房真優');
+-- insert into artists (id,name) values ('2570918','花房真優');  -- 「ハナフサマユ」のidに変更
+insert into artists (id,name) values ('5209868','花房真優');
 insert into artists (id,name) values ('1739330','関取花');
 insert into artists (id,name) values ('1895012','黒木渚');
 insert into artists (id,name) values ('2528621','坂口有望');
@@ -101,6 +102,7 @@ insert into artists (id,name) values ('2224382','藤原さくら');
 insert into artists (id,name) values ('2011531','日食なつこ');
 insert into artists (id,name) values ('2617205','美波');
 insert into artists (id,name) values ('2715575','諭吉佳作／men');
+insert into artists (id,name) values ('4968592','あたらよ');
 
 
 --------------------------------
@@ -120,7 +122,7 @@ DROP TABLE products_not_displayed;
 DROP TABLE products_purchased;
 
 -- データ確認
-select * from artists 
+select * from artists
 
 select * from products 
 
@@ -129,6 +131,8 @@ select * from users
 select * from products_not_displayed
 
 select * from products_purchased
+
+select * from artists_not_displayed
 
 
 select p.id, p.title, a.name, p.release_date, p.price 
@@ -153,6 +157,21 @@ from artists as a
 left join artists_not_displayed as ad on ad.artistid = a.id and ad.userid = 1 
 order by a.name collate nocase 
 
+-- id変更に伴う修正
+---- artistsテーブル
+select * from artists where id='2570918';
+
+update artists set id='5209868' where id='2570918';
+
+select * from artists where id='5209868';
+
+---- productsテーブル
+select * from products where artistid='2570918';
+
+update products set artistid='5209868' where artistid='2570918';
+
+select * from products where artistid='5209868';
+
 --------------------------------
 -- memo 
 --------------------------------
@@ -165,4 +184,8 @@ order by a.name collate nocase
 --  1. PRIMARY KEY や UNIQUE 制約は設定できない
 --  2. DEFAULT 制約を設定する時は、CURRENT_TIME/CURRENT_DATE/CURRENT_TIMESTAMP は指定できない
 --  3. NOT NULL 制約を設定する時は、NULL以外のデフォルト値の設定が必要
+
+delete from products where id = '3859509';
+delete from products where id = '5303323';
+delete from products where id = '5303385';
 

@@ -34,10 +34,14 @@ def create_app(test_config=None):
     app.config["SESSION_TYPE"] = "filesystem"
     Session(app)
 
+    # Configure LINE Bot API
+    app.config["YOUR_CHANNEL_ACCESS_TOKEN"] = 'linebot_access_token'
+    app.config["YOUR_LINE_ID"] = 'linebot_user_id'
+
     # Read addtional config file
     if test_config is None:
         # Load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
+        app.config.from_pyfile(os.path.join(app.instance_path, 'app_settings.cfg'), silent=True)
     else:
         # Load the test config if passed in
         app.config.from_mapping(test_config)
@@ -66,6 +70,9 @@ def create_app(test_config=None):
 
     from . import settings
     app.register_blueprint(settings.bp)
+
+    from .tasks import update_db
+    app.register_blueprint(update_db.bp)
 
     # Set default web page
     app.add_url_rule('/', endpoint='index')

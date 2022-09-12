@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block sidebar %}
+  <nav class="col-md-2 d-none d-md-block bg-light sidebar py-3 border-right">
+    <div class="sidebar-sticky">
+      <!-- <div class="h3">Settings</div> -->
+      <ul class="nav flex-column">
+        {% for s in settings %}
+          <li class="nav-item">
+            <a class="nav-link py-1" href="/settings{{ s[0] }}"><span data-feather="settings"></span>{{ s[1] }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+  <!-- Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    feather.replace()
+  </script>
+{% endblock %}
+
+{% block main %}
+  {% block search %}{% endblock %}
+{% endblock %}

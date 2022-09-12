@@ -1,0 +1,67 @@
+{% extends "layout_settings.html" %}
+
+{% block title %}
+  Settings - Artist List
+{% endblock %}
+
+{% block main %}
+  {% if message %}
+    <p class="h5">{{ message }}</p>
+
+  {% else %}
+    {% if artists %}
+      <h3 class="mb-3">アーティスト一覧</h3>
+    {% else %}
+      <p class="h5 mb-3">データがありません。</p>
+    {% endif %}
+
+    <div class="table-responsive">
+      <table id="index-table" class="table table-sm table-bordered tablesorter mb-0">
+        <!-- <caption class="text-right">{{ artists | count }}件表示</caption> -->
+        <caption>
+          <div id="index-caption-input" class="float-left">
+            <input class="ml-0" type="radio" name="displaymode" value="all" checked> 全て表示
+            <input class="ml-2" type="radio" name="displaymode" value="active" > アクティブのみ表示
+            <input class="ml-2" type="radio" name="displaymode" value="inactive"> 非アクティブのみ表示
+          </div>
+          <div class="float-right">{{ artists | count }}件表示</div>
+        </caption>
+        <thead class="thead-light">
+          <tr>
+            <th class="align-middle" data-placeholder="Enter search word" style="width:16%">ID</th>
+            <th class="align-middle" data-placeholder="Enter search word">Name</th>
+            <th class="align-middle" style="width:20%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in artists %}
+            <tr>
+              <td class="align-middle text-left">{{ a.id }}</td>
+              <td class="align-middle text-left">{{ a.name }}</td>
+              <td class="align-middle">
+                {% if not a.not_displayed %}
+                  <form action="{{ url_for('settings.artist_hidden') }}" method="post" class="d-inline">
+                    <input type="hidden" name="artistid" value="{{ a.id }}">
+                    <button class="btn btn-secondary py-0 px-2" type="submit">非表示</button> 
+                  </form>
+                {% else %}
+                  <form action="{{ url_for('settings.artist_unhidden') }}" method="post" class="d-inline">
+                    <input type="hidden" name="artistid" value="{{ a.id }}">
+                    <button class="btn btn-primary py-0 px-2" type="submit">表示</button> 
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  {% block search %}{% endblock %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" integrity="sha512-dj/9K5GRIEZu+Igm9tC16XPOTz0RdPk9FGxfZxShWf65JJNU2TjbElGjuOo3EhwAJRPhJxwEJ5b+/Ouo+VqZdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/static/js/tablesorter_artistlist.js"></script>
+  <script src="/static/js/index_displaymode.js"></script>
+{% endblock %}

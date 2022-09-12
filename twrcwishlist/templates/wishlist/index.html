@@ -5,10 +5,27 @@
 {% endblock %}
 
 {% block main %}
-  {% if products %}
+  {% if message %}
+    <p class="h5">{{ message }}</p>
+
+  {% else %}
+    {% if not products %}
+      <p class="h5 mb-3">データがありません。</p>
+    {% endif %}
+
     <div class="table-responsive">
       <table id="index-table" class="table table-sm table-bordered tablesorter mb-0">
-        <caption class="text-right">{{ products | count }}件表示</caption>
+        <!-- <caption class="text-right">{{ products | count }}件表示</caption> -->
+        <caption>
+          <div id="index-caption-input" class="float-left">
+            <input class="ml-0" type="radio" name="displaymode" value="" checked> 検討中を表示
+            <input class="ml-2" type="radio" name="displaymode" value="purchased"> 購入済も表示
+            <input class="ml-2" type="radio" name="displaymode" value="purchasedonly"> 購入済のみ表示
+            <input class="ml-2" type="radio" name="displaymode" value="hiddenonly"> 見送りのみ表示
+            <input class="ml-2" type="radio" name="displaymode" value="all"> 全て表示
+          </div>
+          <div class="float-right">{{ products | count }}件表示</div>
+        </caption>
         <thead class="thead-light">
           <tr>
             <th class="align-middle" data-placeholder="Enter search word">Title</th>
@@ -54,10 +71,6 @@
         </tbody>
       </table>
     </div>
-  {% elif message %}
-    <p class="h5">{{ message }}</p>
-  {% else %}
-    <p class="h5">データがありません。</p>
   {% endif %}
 
   {% block search %}{% endblock %}
@@ -65,4 +78,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" integrity="sha512-dj/9K5GRIEZu+Igm9tC16XPOTz0RdPk9FGxfZxShWf65JJNU2TjbElGjuOo3EhwAJRPhJxwEJ5b+/Ouo+VqZdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/static/js/tablesorter.js"></script>
+  <script src="/static/js/index_displaymode.js"></script>
 {% endblock %}

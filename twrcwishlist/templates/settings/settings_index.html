@@ -1,0 +1,36 @@
+{% extends "layout_settings.html" %}
+
+{% block title %}
+  Settings
+{% endblock %}
+
+{% block search %}
+  <div class="my-4">
+    <select class="select-setting" style="width: 20rem;">
+      <option value=""></option>
+      {% for s in settings %}
+        <option value="{{ s[0] }}">{{ s[1] }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var $eventSelect = $('.select-setting');
+
+      $eventSelect.select2({
+        placeholder: '編集内容を選択して下さい。',
+        // allowClear: true,
+        // theme: 'classic',
+        width: 'resolve',
+      });
+
+      $eventSelect.on('select2:select', function(e) {
+        // Do something
+        location.href = "/settings" + e.params.data.id;
+      });
+    });
+  </script>
+{% endblock %}
